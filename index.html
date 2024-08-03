@@ -1,0 +1,3275 @@
+<!DOCTYPE html>
+  <html lang="pt-br">
+  
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Compras</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+      body {
+        background: lightgray;
+  
+      }
+  
+      .container {
+        background: red;
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: relative;
+        top: 0;
+        width: 120%;
+        position: relative;
+  
+      }
+
+  
+      .produto.selecionado {
+        border-color: green;
+  
+      }
+  
+      .produto {
+        background: white;
+        padding: 5%;
+        border-radius: 10px;
+        margin-bottom: 15px;
+        box-shadow: 0 0 10px 0;
+        cursor: pointer;
+        border: 5px solid white;
+        width: 100%;
+      }
+  
+      h1 {
+        margin: 0;
+        font-family: "Righteous";
+        font-weight: normal;
+        margin-bottom: 5px;
+      }
+  
+      h3 {
+        font-size: 30px;
+        margin-bottom: 20px;
+        font-family: "Righteous";
+        font-weight: normal;
+        margin-top: 50px;
+  
+      }
+  
+      h4 {
+        margin-top: 0px;
+        margin-bottom: 5px;
+        font-size: 20px;
+      }
+  
+      .preco {
+        font-weight: bold;
+        font-size: 18px;
+      }
+  
+      .botao {
+        background: #0b940b;
+        text-align: center;
+        padding: 15px;
+        margin-top: 90px;
+        margin-bottom: 100px;
+        border-radius: 50px;
+        color: white;
+        font-weight: bold;
+        font-size: 18px;
+        cursor: pointer;
+        width: 105%;
+      }
+  
+      .botao button {
+        padding: 10px 20px;
+        font-size: 16px;
+        background-color: transparent;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+  
+      .botao button:hover {
+        background-color: transparent;
+      }
+ 
+
+
+      #cidade {
+        margin-bottom: -40px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+      }
+  
+      #items {
+        display: flex;
+        flex-wrap: wrap;
+      }
+  
+      .item {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin: 5px;
+        cursor: pointer;
+  
+      }
+  
+      #filtro-categoria-mercearia {
+        margin-bottom: 10px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+  
+      #filtro-categoria-mercearia option {
+        padding: 8px;
+        font-size: 16px;
+      }
+  
+      /* Estilização das opções do seletor */
+      #filtro-categoria-mercearia:hover,
+      #filtro-categoria-mercearia:focus {
+        border-color: #999;
+      }
+  
+      #filtro-categoria-bebidas {
+        margin-bottom: 10px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+  
+      #filtro-categoria-bebidas option {
+        padding: 8px;
+        font-size: 16px;
+      }
+  
+      /* Estilização das opções do seletor */
+      #filtro-categoria-bebidas:hover,
+      #filtro-categoria-bebidas:focus {
+        border-color: #999;
+      }
+  
+      #filtro-categoria-higiene {
+        margin-bottom: 10px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+  
+      #filtro-categoria-higiene option {
+        padding: 8px;
+        font-size: 16px;
+      }
+  
+      /* Estilização das opções do seletor */
+      #filtro-categoria-higiene:hover,
+      #filtro-categoria-higiene:focus {
+        border-color: #999;
+      }
+  
+      #filtro-categoria-limpeza {
+        margin-bottom: 10px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+  
+      #filtro-categoria-limpeza option {
+        padding: 8px;
+        font-size: 16px;
+      }
+  
+      /* Estilização das opções do seletor */
+      #filtro-categoria-limpeza:hover,
+      #filtro-categoria-limpeza:focus {
+        border-color: #999;
+      }
+      #filtro-categoria-padaria {
+        margin-bottom: 10px;
+        /* Adiciona espaço abaixo do seletor */
+        padding: 5px;
+        font-size: 14px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        cursor: pointer;
+        outline: none;
+      }
+  
+      #filtro-categoria-padaria option {
+        padding: 8px;
+        font-size: 16px;
+      }
+  
+      /* Estilização das opções do seletor */
+      #filtro-categoria-padaria:hover,
+      #filtro-categoria-padaria:focus {
+        border-color: #999;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53685388135_caf1232c21_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53684076697_8e9976529e_n.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -9px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685177398_23e31da57d_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685182578_e72ea655e8_n.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685190958_1df7b247e0_m.jpg"] {
+        width: 55px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -5px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53684971141_ecb090e787_m.jpg"] {
+        width: 60px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -12px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685434510_b131a0610e_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685350474_e8c76bb357_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685210638_b717729c4d_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53684991106_bb14ce6e8d_n.jpg"] {
+        width: 60px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685221003_d1f4cd5171_n.jpg"] {
+        width: 55px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685001131_1d26b21f3e_n.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -20px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685695684_0e605a88f5_m.jpg"] {
+        width: 60px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685790780_9068acd6b3_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53684475102_3963d96b33_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -9px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685717044_1974a54e8f_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685804490_1d479035ab_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685723009_8f87910bf9_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53685819535_9c32f507e1_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687965536_fb1c1b52f2_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -28px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687957936_c6b5e09abb_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688428045_5df137f935_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -6px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687107277_10d25e4c2c_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688342119_97e72948e2_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53684508437_0af68cc7e6_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -13px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688346379_5ce9984fa0_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688359234_79af3b343d_m.jpg"] {
+        width: 68px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688227728_2f3cae0d9d_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688291613_a633c0d9ff_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688290893_b2149fd2fd_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -20px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687197162_b647765798_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688424484_9735b14933_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687193907_234c4a8de5_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688521335_229b57414b_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688417619_aa52e6b455_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -14px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688065351_dbd6fc98b2_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -29px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687188072_554954c510_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688061236_31ea2806be_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688060791_37b16f76d5_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688279533_ce6e4c3f82_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -29px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688414104_1c3a4830c7_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688413329_9c0f864317_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53687180047_585949eaf8_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688055446_b557a7163b_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688509160_83bce333f2_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53688057366_e291e319d9_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -17px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53693812362_69af43a14c_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53693832342_a77ff991af_m.jpg"] {
+        width: 160px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53694937403_6d54c46c35_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53695175355_f8fdb03283_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53694727986_dee7826509_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -30px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53693851312_0c8e59362f_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53695187170_065255a4b2_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53695100044_ff8b4a0e76_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53699766122_a37ba84a4b_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700889778_ab510b8292_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700689766_9bda871871_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700696166_4a5af5ab38_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700713831_91362af348_n.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53699812017_c6b2473b4b_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700941388_44f5c12c75_m.jpg"] {
+        width: 160px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -29px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53701284809_b6b100d735_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53701075759_ddde70411c_m.jpg"] {
+        width: 125px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -2px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53701141588_2d703c32d6_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700043462_b7929f743d_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53700057612_f075c940eb_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53701168453_6f7ec25ed1_m.jpg"] {
+        width: 105px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704019568_a66fbec611_m.jpg"] {
+        width: 98px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704240290_6db034b460_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -17px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53703790361_712105d873_m.jpg"] {
+        width: 125px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -20px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704247545_c6af5e8d2c_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53703817486_0ed60366b1_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704149359_d123c2b4c0_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53702926377_26ed12ed2a_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53702928762_79b7b67e29_m.jpg"] {
+        width: 78px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704259265_c573ee2e2c_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704176019_383782557f_m.jpg"] {
+        width: 105px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -35px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53703840676_08cbe5eecf_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704066718_5980b732d0_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53702958952_bc08e40ffe_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704076643_d703f21d70_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704207619_ef31967c21_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704373710_91a34a2391_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53703947791_4e14d05091_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704294559_74cbe69d61_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -13px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704298064_989dd24701_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53704395535_97b01c2b73_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707735569_f82632315f_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707410646_0de5cb6b1d_m.jpg"] {
+        width: 69px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53706516232_95a3a55ed7_m.jpg"] {
+        width: 53px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -5px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53706511787_fcfdb7c5e3_m.jpg"] {
+        width: 55px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -3px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707645688_855e723cfd_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -7px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707770419_10c63025ed_m.jpg"] {
+        width: 74px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -12px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53706538782_4e941f1aa3_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707785784_f22d21c236_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707794304_32740e0642_m.jpg"] {
+        width: 55px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -5px;
+        margin-top: -14px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53706560442_9786843855_m.jpg"] {
+        width: 55px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -7px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707836784_c2be1cc51d_m.jpg"] {
+        width: 105px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53706611477_a75c13852a_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53707515506_b42b22fde6_m.jpg"] {
+        width: 125px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719460230_c476797901_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719474215_dfb47a78d6_m.jpg"] {
+        width: 85px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719483390_6dd4121c5b_m.jpg"] {
+        width: 95px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -17px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719283003_4118dccc99_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719286893_85d84413ff_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718181682_d5ff085b56_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718239977_c4daf05336_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: 20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719149956_a6f1a8b9e5_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -12px;
+        margin-top: 20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718247627_fb2dc60df5_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -24px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719606025_d81bc44809_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719613620_7f9a9e5454_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718296512_d9b46a6c4f_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 19px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719406953_ff35fa8b6f_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 20px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719681575_975d0a8944_m.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -20px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719691485_35e4804657_m.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -22px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719474103_28af9af083_m.jpg"] {
+        width: 105px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719712398_7942c666c4_m.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -25px;
+        margin-top: -12px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719512016_cfd2601717_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718629047_210ff6744b_m.jpg"] {
+        width: 195px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 45px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718633697_258ed064fa_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 45px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53718639337_2a300ae9f3_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 45px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719549616_ab5aaeb9f4_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 45px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719552246_312292d159_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 45px;
+      }
+  
+      .produto img[src="https://live.staticflickr.com/65535/53719895329_fb3ed9a753_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732742415_24dc103f04_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53719907764_a7da00d06a_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -19px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732439178_cee57da585_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732324921_d565290a9b_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732552734_02dd3d8353_m.jpg"] {
+        width: 125px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53731411207_dba711c623_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732668349_d83a4da598_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732503433_48c61db717_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732676374_c67ec708f0_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top:20px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732558323_b7b6517219_m.jpg"] {
+        width: 125px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 24px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53731439842_4fca57872e_m.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 20px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732682905_0235a5202e_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732689145_96d71a0d8f_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732601049_b106ef0e64_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732608444_b31cc910ce_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732487368_9e30998c1a_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732575393_8e511b9578_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53732381671_e4dd9ff638_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53731461022_f92bdc25b7_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 40px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734310517_23bf9c27aa_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735671860_9e32d36703_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734319307_7d29fdc6c4_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 20px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734333027_83d3334bde_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735600539_c0416b48ae_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735264186_a179a24c30_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735698285_b40e1f88ef_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735607279_11d5533a29_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734346992_24f5640499_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735480573_883b52bb81_m.jpg"] {
+        width: 115px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735707800_3aa8d0acf4_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 20px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735711915_5ef9da1924_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735621499_2d9684b747_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734374472_2c01fdfdd3_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735641939_a55737a24c_m.jpg"] {
+        width: 150px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735644849_940ff46a32_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734383217_bc44a591d6_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735649484_862b2e38cc_m.jpg"] {
+        width: 140px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735313226_2532c753df_m.jpg"] {
+        width: 135px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735745335_763df8944b_m.jpg"] {
+        width: 130px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735755195_13d7d54d54_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735758920_e69faf7775_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735670499_cb20c6b797_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735538008_dd7a68a19c_m.jpg"] {
+        width: 105px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735542453_83322d26f0_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735543858_8fa914bbfa_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53734416167_cafcae52ab_m.jpg"] {
+        width: 120px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735682464_852d003ab7_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53735350036_7c3c0a78a8_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53737638008_ee2d2143a8_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -9px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53737782744_f7e2ed1df1_m.jpg"] {
+        width: 90px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53737654383_bc37134ffd_m.jpg"] {
+        width: 100px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53737796084_79763874ed_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -10px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53736536817_4e4e87b177_m.jpg"] {
+        width: 80px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -15px;
+      
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766721162_1eaf9c793c_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 5px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766727097_5c450d0815_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767640446_272c36c33d_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767969104_2b51d5e0f0_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767838128_b4a86944c5_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768069480_e180bf7d98_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767980499_5cb55e2f9e_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+
+      .produto img[src="https://live.staticflickr.com/65535/53768032510_30b9011309_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 15px;
+
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766784472_fba21bf450_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768023659_94f55b3dd3_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+
+      .produto img[src="https://live.staticflickr.com/65535/53767892488_4e089e5e75_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767895338_a5ec316c6f_m.jpg"] {
+        width: 110px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+
+      .produto img[src="https://live.staticflickr.com/65535/53766753632_e9418a8cb8_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767993559_840eca0e4a_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766762407_b2d605117f_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768162225_dabdcbcb81_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768074014_b7b042f80b_m.jpg"] {
+        width: 65px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767752126_84c731bf2c_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767946153_4d8aab2036_m.jpg"] {
+        width: 70px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -12px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766848287_d34114cc27_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -18px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768177560_9108280e67_m.jpg"] {
+        width: 75px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: -18px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766860927_284e5d8cbd_m.jpg"] {
+        width: 190px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768191805_e36bfce653_m.jpg"] {
+        width: 190px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53766868392_8b13984f38_m.jpg"] {
+        width: 190px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767974253_c8cb478f41_m.jpg"] {
+        width: 180px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53767786861_33f9745eeb_m.jpg"] {
+        width: 190px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+      .produto img[src="https://live.staticflickr.com/65535/53768206770_078b8e8458_m.jpg"] {
+        width: 190px;
+        border-radius: 5px;
+        float: right;
+        margin-right: -15px;
+        margin-top: 10px;
+      }
+
+    </style>
+  
+  <body>
+    <header>
+      <div class="container">
+        <h1>Lista de Compras</h1>
+        <select id="cidade" onchange="filtrarPorCidade()">
+          <option value="estado">Selecione seu estado</option>
+  
+  
+          <option value="MG">Minas Gerais</option>
+  
+  
+        </select>
+  
+      </div>
+    </header>
+    <main>
+      <h3>BEBIDAS:</h3>
+      <select id="filtro-categoria-bebidas" onchange="filtrarProdutosBebidas()">
+        <option value="todos">Selecione a categoria</option>
+        <option value="agua">Água</option>
+        <option value="cervejas">Cervejas</option>
+        <option value="refri">Refrigerantes</option>
+  
+  
+      </select>
+  
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685388135_caf1232c21_m.jpg">
+        <h4>ÁGUA DE COCO</h4>
+        <p>Água de Coco Puro Coco </p>
+        <p class="preco">TP com 180ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53684076697_8e9976529e_n.jpg">
+        <h4>ÁGUA DE COCO</h4>
+        <p>Água de Coco Puro Coco </p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685177398_23e31da57d_m.jpg">
+        <h4>ÁGUA DE COCO</h4>
+        <p>Água de Coco Quadrado</p>
+        <p class="preco">TP com 200ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685182578_e72ea655e8_n.jpg">
+        <h4>ÁGUA DE COCO</h4>
+        <p>Água de Coco Quadrado </p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685190958_1df7b247e0_m.jpg">
+        <h4>ÁGUA MINERAL</h4>
+        <p>Água Mineral Mineiro Com Gás</p>
+        <p class="preco">Pet com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53684971141_ecb090e787_m.jpg">
+        <h4>ÁGUA MINERAL</h4>
+        <p>Água Mineral Mineiro Sem Gás</p>
+        <p class="preco">Pet com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="agua" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685434510_b131a0610e_m.jpg">
+        <h4>ÁGUA MINERAL</h4>
+        <p>Água Mineral São Lourenço Com gás </p>
+        <p class="preco">Pet com 510ml</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685350474_e8c76bb357_m.jpg">
+        <h4>CERVEJA AMSTEL</h4>
+        <p>Cerveja Amstel </p>
+        <p class="preco">Lata com 473ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685210638_b717729c4d_m.jpg">
+        <h4>CERVEJA BRAHMA</h4>
+        <p>Cerveja Brahma Chopp</p>
+        <p class="preco">Latão com 473ml</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG " data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53684991106_bb14ce6e8d_n.jpg">
+        <h4>CERVEJA BUDWEISER</h4>
+        <p>Cerveja Budweiser </p>
+        <p class="preco">Long neck com 330ml</p>
+      </div>
+      <div class="produto" data-cidade="MG " data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685221003_d1f4cd5171_n.jpg">
+        <h4>CERVEJA CORONA</h4>
+        <p>Cerveja Corona </p>
+        <p class="preco">Long neck com 330ml</p>
+  
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685001131_1d26b21f3e_n.jpg">
+        <h4>CERVEJA HEINEKEN</h4>
+        <p>Cerveja Heineken </p>
+        <p class="preco">Lata com 473ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685695684_0e605a88f5_m.jpg">
+        <h4>CERVEJA HEINEKEN</h4>
+        <p>Cerveja Heineken </p>
+        <p class="preco">Long neck com 250ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685790780_9068acd6b3_m.jpg">
+        <h4>CERVEJA HEINEKEN</h4>
+        <p>Cerveja Heineken </p>
+        <p class="preco">Long neck com 330ml</p>
+      </div>
+  
+  
+      <div class="produto" data-cidade="MG" data-categorias="cervejas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53684475102_3963d96b33_m.jpg">
+        <h4>CERVEJA STELLA ARTOIS</h4>
+        <p>Cerveja Stella Artois</p>
+        <p class="preco">Lata com 473ml</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="refri" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685717044_1974a54e8f_m.jpg">
+        <h4>REFRIGERANTE COCA-COLA</h4>
+        <p>Refrigerante Coca-Cola Sleek </p>
+        <p class="preco">Lata com 220ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="refri" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685804490_1d479035ab_m.jpg">
+        <h4>REFRIGERANTE COCA-COLA</h4>
+        <p>Refrigerante Coca-Cola Sleek </p>
+        <p class="preco">Lata com 310ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="refri" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685723009_8f87910bf9_m.jpg">
+        <h4>REFRIGERANTE GUARANÁ ANTARCTICA</h4>
+        <p>Refrigerante Guaraná Antarctica </p>
+        <p class="preco">Lata com 310ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="refri" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53685819535_9c32f507e1_m.jpg">
+        <h4>REFRIGERANTE GUARANÁ ANTARCTICA</h4>
+        <p>Refrigerante Guaraná Antarctica </p>
+        <p class="preco">Lata com 350ml</p>
+      </div>
+  
+      <h3>MERCEARIA:</h3>
+      <select id="filtro-categoria-mercearia" onchange="filtrarProdutosMercearia()">
+        <option value="todos">Selecione a categoria</option>
+        <option value="acucar-adocante">Açúcar e adoçantes</option>
+        <option value="cafes-chas-achocolatados">Cafés, chás e achocolatados</option>
+        <option value="farinhas">Farinhas</option>
+        <option value="graos">Grãos</option>
+  
+  
+      </select>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687965536_fb1c1b52f2_m.jpg">
+        <h4>AÇÚCAR DA BARRA </h4>
+        <p>Açúcar Demerara da Barra </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687957936_c6b5e09abb_m.jpg">
+        <h4>AÇÚCAR DA BARRA</h4>
+        <p>Açúcar Da Barra Refinado </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688428045_5df137f935_m.jpg">
+        <h4>AÇUCAR DELTA</h4>
+        <p>Açúcar Delta Cristal </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687107277_10d25e4c2c_m.jpg">
+        <h4>AÇÚCAR DELTA</h4>
+        <p>Açúcar Delta Cristal </p>
+        <p class="preco">Pacote com 5kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688342119_97e72948e2_m.jpg">
+        <h4>AÇÚCAR UNIÃO </h4>
+        <p>Açúcar Demerara Naturale União </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53684508437_0af68cc7e6_m.jpg">
+        <h4>AÇÚCAR UNIÃO</h4>
+        <p>Açúcar União Refinado </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688346379_5ce9984fa0_m.jpg">
+        <h4>ADOÇANTE ADOCYL</h4>
+        <p>Adoçante Adocyl Sacarina </p>
+        <p class="preco">Frasco com 100ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688359234_79af3b343d_m.jpg">
+        <h4>ADOÇANTE MARATÁ</h4>
+        <p>Adoçante Líquido Maratá Sacarina </p>
+        <p class="preco">Frasco com 100ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="acucar-adocante" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688227728_2f3cae0d9d_m.jpg">
+        <h4>ADOÇANTE ZERO-CAL</h4>
+        <p>Adoçante Líquido Zero-Cal Sacarina </p>
+        <p class="preco">Frasco com 100ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688291613_a633c0d9ff_m.jpg">
+        <h4>ACHOCOLATADO EM PÓ</h4>
+        <p>Achocolatado em Pó Nescau </p>
+        <p class="preco">Lata com 200g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688290893_b2149fd2fd_m.jpg">
+        <h4>ACHOCOLATADO EM PÓ</h4>
+        <p>Achocolatado em Pó Nescau </p>
+        <p class="preco">Lata com 370g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687197162_b647765798_m.jpg">
+        <h4>ACHOCOLATADO EM PÓ</h4>
+        <p>Achocolatado em Pó Toddy</p>
+        <p class="preco">Pote com 200g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688424484_9735b14933_m.jpg">
+        <h4>ACHOCOLATADO EM PÓ</h4>
+        <p>Achocolatado em Pó Toddy </p>
+        <p class="preco">Pote com 370g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687193907_234c4a8de5_m.jpg">
+        <h4>CAFÉ 3 CORAÇÕES</h4>
+        <p>Café 3 Corações Extra Forte </p>
+        <p class="preco">Pacote com 250g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688521335_229b57414b_m.jpg">
+        <h4>CAFÉ 3 CORAÇÕES</h4>
+        <p>Café 3 Corações Extra Forte </p>
+        <p class="preco">Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688417619_aa52e6b455_m.jpg">
+        <h4>CAFÉ 3 CORAÇÕES</h4>
+        <p>Café 3 Corações Tradicional</p>
+        <p class="preco">Pacote com 250g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688065351_dbd6fc98b2_m.jpg">
+        <h4>CAFÉ 3 CORAÇÕES</h4>
+        <p>Café 3 Corações Tradicional</p>
+        <p class="preco">Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687188072_554954c510_m.jpg">
+        <h4>CAFÉ BARÃO</h4>
+        <p>Café Barão Extra Forte </p>
+        <p class="preco">Pouch com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688061236_31ea2806be_m.jpg">
+        <h4>CAFÉ BARÃO</h4>
+        <p>Café Barão Tradicional </p>
+        <p class="preco">Pouch com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688060791_37b16f76d5_m.jpg">
+        <h4>CAFÉ CABOCLO</h4>
+        <p>Café Caboclo Extra Forte </p>
+        <p class="preco">Vácuo Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688279533_ce6e4c3f82_m.jpg">
+        <h4>CAFÉ CABOCLO</h4>
+        <p>Café Caboclo Tradicional</p>
+        <p class="preco">Pouch com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688414104_1c3a4830c7_m.jpg">
+        <h4>CAFÉ MELITTA</h4>
+        <p>Café Melitta Extra Forte </p>
+        <p class="preco">Pouch com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688413329_9c0f864317_m.jpg">
+        <h4>CAFÉ PILÃO</h4>
+        <p>Café Pilão Tradicional</p>
+        <p class="preco">Vácuo Pacote com 250g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53687180047_585949eaf8_m.jpg">
+        <h4>FILTRO DE PAPEL BRIGITTA</h4>
+        <p>Filtro de Papel Para Café Brigitta 103 </p>
+        <p class="preco">Caixeta com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688055446_b557a7163b_m.jpg">
+        <h4>FILTRO DE PAPEL BRIGITTA</h4>
+        <p>Filtro de Papel Para Café Brigitta 102 </p>
+        <p class="preco">Caixeta com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688509160_83bce333f2_m.jpg">
+        <h4>FILTRO DE PAPEL MELITTA</h4>
+        <p>Filtro de Papel Para Café Melitta 103 </p>
+        <p class="preco">Caixeta com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cafes-chas-achocolatados" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53688057366_e291e319d9_m.jpg">
+        <h4>FILTRO DE PAPEL MELITTA</h4>
+        <p>Filtro de Papel Para Café Melitta 102 </p>
+        <p class="preco">Caixeta com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53693812362_69af43a14c_m.jpg">
+        <h4>AMIDO DE MILHO PACHÁ</h4>
+        <p>AMIDO DE MILHO PACHÁ </p>
+        <p class="preco">Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53693832342_a77ff991af_m.jpg">
+        <h4>FARINHA DE MANDIOCA PACHÁ</h4>
+        <p>Farinha de Mandioca Pachá Temperada Bacon </p>
+        <p class="preco">Pacote com 300g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53694937403_6d54c46c35_m.jpg">
+        <h4>FARINHA DE MANDIOCA PACHÁ</h4>
+        <p>Farinha de Mandioca Pachá Torrada </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53695175355_f8fdb03283_m.jpg">
+        <h4>FARINHA DE TRIGO DONA BENTA</h4>
+        <p>Farinha de Trigo Dona Benta com Fermento </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53694727986_dee7826509_m.jpg">
+        <h4>FARINHA DE TRIGO DONA BENTA</h4>
+        <p>Farinha de Trigo Dona Benta Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53693851312_0c8e59362f_m.jpg">
+        <h4>FAROFA DE MILHO PACHÁ</h4>
+        <p>Farofa de Milho Pachá </p>
+        <p class="preco">Pacote com 300g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53695187170_065255a4b2_m.jpg">
+        <h4>FLOCÃO DE MILHO MARATÁ</h4>
+        <p>Flocão de Milho Maratá </p>
+        <p class="preco">Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="farinhas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53695100044_ff8b4a0e76_m.jpg">
+        <h4>FLOCOS DE MILHO MARATÁ</h4>
+        <p>Flocos de Milho Maratá </p>
+        <p class="preco">Pacote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53699766122_a37ba84a4b_m.jpg">
+        <h4>ARROZ CAMIL </h4>
+        <p>Arroz Camil Agulhinha Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+  
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700889778_ab510b8292_m.jpg">
+        <h4>ARROZ CAMIL </h4>
+        <p>Arroz Camil Agulhinha Tipo 1 </p>
+        <p class="preco">Pacote com 5kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700689766_9bda871871_m.jpg">
+        <h4>ARROZ PRATO FINO </h4>
+        <p>Arroz Prato Fino Agulhinha - Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700696166_4a5af5ab38_m.jpg">
+        <h4>ARROZ PRATO FINO </h4>
+        <p>Arroz Prato Fino Agulhinha - Tipo 1 </p>
+        <p class="preco">Pacote com 5kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700713831_91362af348_n.jpg">
+        <h4>ARROZ PRATO FINO </h4>
+        <p>Arroz Prato Fino Parboilizado - Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53699812017_c6b2473b4b_m.jpg">
+        <h4>ARROZ PRATO FINO </h4>
+        <p>Arroz Prato Fino Parboilizado - Tipo 1 </p>
+        <p class="preco">Pacote com 5kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700941388_44f5c12c75_m.jpg">
+        <h4>CANJICA YOKI </h4>
+        <p>Canjica Yoki Cristal </p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53701075759_ddde70411c_m.jpg">
+        <h4>FEIJÃO CARIOCA DONA DÊ</h4>
+        <p>Feijão Carioca Dona Dê Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53701284809_b6b100d735_m.jpg">
+        <h4>FEIJÃO PRETO DONA DÊ</h4>
+        <p>Feijão Preto Dona Dê Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53701141588_2d703c32d6_m.jpg">
+        <h4>FEIJÃO CARIOCA GALANTE</h4>
+        <p>Feijão Carioca Galante Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700043462_b7929f743d_m.jpg">
+        <h4>FEIJÃO PRETO GALANTE</h4>
+        <p>Feijão Preto Galante Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53700057612_f075c940eb_m.jpg">
+        <h4>FEIJÃO CARIOCA KICALDO</h4>
+        <p>Feijão Carioca Kicaldo Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="graos" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53701168453_6f7ec25ed1_m.jpg">
+        <h4>FEIJÃO PRETO KICALDO</h4>
+        <p>Feijão Preto Kicaldo Tipo 1 </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <h3>LIMPEZA:</h3>
+      <select id="filtro-categoria-limpeza" onchange="filtrarProdutosLimpeza()">
+        <option value="todos">Selecione a categoria</option>
+        <option value="banheiro">Limpeza de banheiro</option>
+        <option value="cozinha">Limpeza de cozinha</option>
+        <option value="roupas">Limpeza de roupas</option>
+      </select>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704019568_a66fbec611_m.jpg">
+        <h4>ÁGUA SANITÁRIA CLORAL</h4>
+        <p>Água Sanitária Cloral </p>
+        <p class="preco">Frasco com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704240290_6db034b460_m.jpg">
+        <h4>ÁGUA SANITÁRIA CLORAL</h4>
+        <p>Água Sanitária Cloral </p>
+        <p class="preco">Frasco com 2L</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53703790361_712105d873_m.jpg">
+        <h4>ÁGUA SANITÁRIA CLORAL</h4>
+        <p>Água Sanitária Cloral </p>
+        <p class="preco">Bombona com 5L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704247545_c6af5e8d2c_m.jpg">
+        <h4>ÁGUA SANITÁRIA SANTA CLARA</h4>
+        <p>Água Sanitária Santa Clara</p>
+        <p class="preco">Frasco com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53703817486_0ed60366b1_m.jpg">
+        <h4>ÁGUA SANITÁRIA SANTA CLARA</h4>
+        <p>Água Sanitária Santa Clara</p>
+        <p class="preco">Frasco com 2L</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704149359_d123c2b4c0_m.jpg">
+        <h4>ÁGUA SANITÁRIA SANTA CLARA</h4>
+        <p>Água Sanitária Santa Clara</p>
+        <p class="preco">Bombona com 5L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53702926377_26ed12ed2a_m.jpg">
+        <h4>ÁGUA SANITÁRIA YPÊ</h4>
+        <p>Água Sanitária Ypê</p>
+        <p class="preco">Frasco com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53702928762_79b7b67e29_m.jpg">
+        <h4>ÁGUA SANITÁRIA YPÊ</h4>
+        <p>Água Sanitária Ypê</p>
+        <p class="preco">Frasco com 2L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704259265_c573ee2e2c_m.jpg">
+        <h4>ÁGUA SANITÁRIA YPÊ</h4>
+        <p>Água Sanitária Ypê</p>
+        <p class="preco">Bombona com 5L</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704176019_383782557f_m.jpg">
+        <h4>DESINFETANTE BAK YPÊ</h4>
+        <p>Desinfetante Bak Ypê Lavanda</p>
+        <p class="preco">Frasco com 2L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53703840676_08cbe5eecf_m.jpg">
+        <h4>DESINFETANTE BAK YPÊ</h4>
+        <p>Desinfetante Bak Ypê Lavanda</p>
+        <p class="preco">Bombona com 5L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704066718_5980b732d0_m.jpg">
+        <h4>DESINFETANTE MR.MÚSCULO</h4>
+        <p>Desinfetante Mr Músculo Banheiro</p>
+        <p class="preco">Refil com 400ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53702958952_bc08e40ffe_m.jpg">
+        <h4>DESINFETANTE MR.MÚSCULO</h4>
+        <p>Desinfetante Mr Músculo Tiro Limo</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704076643_d703f21d70_m.jpg">
+        <h4>DESINFETANTE POWER ACTION VEJA</h4>
+        <p>Desinfetante Power Action Veja Lavanda</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="banheiro" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704207619_ef31967c21_m.jpg">
+        <h4>DESINFETANTE POWER ACTION VEJA</h4>
+        <p>Desinfetante Power Action Veja Lavanda</p>
+        <p class="preco">Frasco com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704373710_91a34a2391_m.jpg">
+        <h4>DESENGORDURANTE CIF COZINHA </h4>
+        <p>Desengordurante Cif Cozinha</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53703947791_4e14d05091_m.jpg">
+        <h4>DESENGORDURANTE CIF COZINHA </h4>
+        <p>Desengordurante Cif Cozinha Gatilho </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704294559_74cbe69d61_m.jpg">
+        <h4>DESENGORDURANTE MR.MÚSCULO COZINHA</h4>
+        <p>Desengordurante Mr.Músculo Cozinha </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704298064_989dd24701_m.jpg">
+        <h4>DESENGORDURANTE MR.MÚSCULO COZINHA</h4>
+        <p>Desengordurante Mr.Músculo Cozinha Gatilho</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53704395535_97b01c2b73_m.jpg">
+        <h4>DESENGORDURANTE MR.MÚSCULO COZINHA</h4>
+        <p>Desengordurante Mr.Músculo Cozinha </p>
+        <p class="preco">Refil com 400ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707735569_f82632315f_m.jpg">
+        <h4>DETERGENTE LÍQUIDO LIMPOL</h4>
+        <p>Detergente líquido Limpol Coco </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707410646_0de5cb6b1d_m.jpg">
+        <h4>DETERGENTE LÍQUIDO LIMPOL</h4>
+        <p>Detergente líquido Limpol Cristal </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53706516232_95a3a55ed7_m.jpg">
+        <h4>DETERGENTE LÍQUIDO MINUANO</h4>
+        <p>Detergente líquido Minuano Clear </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53706511787_fcfdb7c5e3_m.jpg">
+        <h4>DETERGENTE LÍQUIDO MINUANO</h4>
+        <p>Detergente líquido Minuano Coco </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707645688_855e723cfd_m.jpg">
+        <h4>DETERGENTE LÍQUIDO YPÊ</h4>
+        <p>Detergente líquido Ypê Clear </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707770419_10c63025ed_m.jpg">
+        <h4>DETERGENTE LÍQUIDO YPÊ</h4>
+        <p>Detergente líquido Ypê Coco </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53706538782_4e941f1aa3_m.jpg">
+        <h4>SABÃO EM PASTA CRISTAL </h4>
+        <p>Sabão em pasta Cristal Rosa</p>
+        <p class="preco">Pote com 500g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707785784_f22d21c236_m.jpg">
+        <h4>SABÃO EM PASTA UFE </h4>
+        <p>Sabão em pasta Ufe Coco </p>
+        <p class="preco">Pote com 500g</p>
+      </div>
+  
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707794304_32740e0642_m.jpg">
+        <h4>SAPÓLIO RADIUM </h4>
+        <p>Sapólio Radium Cremoso Clássico </p>
+        <p class="preco">Frasco com 250ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="cozinha" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53706560442_9786843855_m.jpg">
+        <h4>SAPÓLIO RADIUM </h4>
+        <p>Sapólio Radium Cremoso Clássico </p>
+        <p class="preco">Frasco com 450ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707836784_c2be1cc51d_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS COMFORT</h4>
+        <p>Amaciante para Roupa Comfort Azul </p>
+        <p class="preco">Bombona com 3l</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53706611477_a75c13852a_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS COMFORT</h4>
+        <p>Amaciante para Roupas Concentrado Comfort Azul </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53707515506_b42b22fde6_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS COMFORT</h4>
+        <p>Amaciante para Roupas Concentrado Comfort Azul </p>
+        <p class="preco">Doyp com 900ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719460230_c476797901_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS DOWNY</h4>
+        <p>Amaciante para Roupas Concentrado Downy Brisa de Verão</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719474215_dfb47a78d6_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS DOWNY</h4>
+        <p>Amaciante para Roupas Concentrado Downy Brisa de Verão</p>
+        <p class="preco">Frasco com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719483390_6dd4121c5b_m.jpg">
+        <h4>AMACIANTE PARA ROUPAS DOWNY</h4>
+        <p>Amaciante para Roupas Concentrado Downy Brisa de Verão</p>
+        <p class="preco">Frasco com 1,5L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719283003_4118dccc99_m.jpg">
+        <h4>DETERGENTE EM PÓ BRILHANTE</h4>
+        <p>Detergente em Pó Brilhante Limpeza Total </p>
+        <p class="preco">Pacote com 800g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719286893_85d84413ff_m.jpg">
+        <h4>DETERGENTE EM PÓ BRILHANTE</h4>
+        <p>Detergente em Pó Brilhante Limpeza Total </p>
+        <p class="preco">Caixeta com 1,6kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718181682_d5ff085b56_m.jpg">
+        <h4>DETERGENTE EM PÓ BRILHANTE</h4>
+        <p>Detergente em Pó Brilhante Limpeza Total </p>
+        <p class="preco">Pacote com 2,4kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718239977_c4daf05336_m.jpg">
+        <h4>DETERGENTE EM PÓ OMO</h4>
+        <p>Detergente em Pó Omo Lavagem Perfeita </p>
+        <p class="preco">Caixeta com 800g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719149956_a6f1a8b9e5_m.jpg">
+        <h4>DETERGENTE EM PÓ OMO</h4>
+        <p>Detergente em Pó Omo Lavagem Perfeita </p>
+        <p class="preco">Caixeta com 1,6kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718247627_fb2dc60df5_m.jpg">
+        <h4>DETERGENTE EM PÓ OMO</h4>
+        <p>Detergente em Pó Omo Lavagem Perfeita </p>
+        <p class="preco">Pacote com 2,4kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719606025_d81bc44809_m.jpg">
+        <h4>LAVA ROUPA LÍQUIDO BRILHANTE</h4>
+        <p>Lava Roupa Líquido Brilhante</p>
+        <p class="preco">Bombona com 3L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719613620_7f9a9e5454_m.jpg">
+        <h4>LAVA ROUPA LÍQUIDO OMO</h4>
+        <p>Lava Roupa Líquido Omo Lavagem Perfeita</p>
+        <p class="preco">Sachê com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718296512_d9b46a6c4f_m.jpg">
+        <h4>SABÃO EM BARRA UFE</h4>
+        <p>Sabão em Barra Ufe Coco</p>
+        <p class="preco">Pacote com 900g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="roupas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719406953_ff35fa8b6f_m.jpg">
+        <h4>SABÃO EM BARRA YPÊ</h4>
+        <p>Sabão em Barra Ypê Toque de Aveia e Coco</p>
+        <p class="preco">Pacote com 900g</p>
+      </div>
+  
+  
+      </div>
+      <h3>HIGIENE E PERFUMARIA:</h3>
+      <select id="filtro-categoria-higiene" onchange="filtrarProdutosHigiene()">
+        <option value="todos">Selecione a categoria</option>
+        <option value="higiene-bucal">Higiene bucal</option>
+        <option value="higiene-intima">Higiene íntima</option>
+        <option value="papel-higienico">Papel higiênico</option>
+        <option value="sabonetes">Sabonetes</option>
+  
+      </select>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719681575_975d0a8944_m.jpg">
+        <h4>ANTISSÉPTICO BUCAL CLOSEUP</h4>
+        <p>Antisséptico Bucal Closeup Fresh Zero </p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719691485_35e4804657_m.jpg">
+        <h4>ANTISSÉPTICO BUCAL COLGATE</h4>
+        <p>Antisséptico Bucal Colgate Plax Ice Infinity</p>
+        <p class="preco">Frasco com 250ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719474103_28af9af083_m.jpg">
+        <h4>ANTISSÉPTICO BUCAL LISTERINE</h4>
+        <p>Antisséptico Bucal Listerine Antitártaro</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719712398_7942c666c4_m.jpg">
+        <h4>ANTISSÉPTICO BUCAL LISTERINE</h4>
+        <p>Antisséptico Bucal Listerine Cool Mint</p>
+        <p class="preco">Frasco com 500ml</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719512016_cfd2601717_m.jpg">
+        <h4>ANTISSÉPTICO BUCAL LISTERINE</h4>
+        <p>Antisséptico Bucal Listerine Cool Mint</p>
+        <p class="preco">Frasco com 1,5L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718629047_210ff6744b_m.jpg">
+        <h4>CREME DENTAL CLOSEUP</h4>
+        <p>Creme Dental Closeup Dentes Brancos </p>
+        <p class="preco">Tubo com 130g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718633697_258ed064fa_m.jpg">
+        <h4>CREME DENTAL CLOSEUP</h4>
+        <p>Creme Dental Closeup Proteção Bioativa</p>
+        <p class="preco">Tubo com 150g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53718639337_2a300ae9f3_m.jpg">
+        <h4>CREME DENTAL COLGATE</h4>
+        <p>Creme Dental Colgate Tripla Ação Hortelã</p>
+        <p class="preco">Tubo com 90g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719549616_ab5aaeb9f4_m.jpg">
+        <h4>CREME DENTAL ORAL-B </h4>
+        <p>Creme Dental Oral-B 4 em 1</p>
+        <p class="preco">Tubo com 70g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719552246_312292d159_m.jpg">
+        <h4>CREME DENTAL ORAL-B </h4>
+        <p>Creme Dental Oral-B Extra Branco</p>
+        <p class="preco">Tubo com 70g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719895329_fb3ed9a753_m.jpg">
+        <h4>FIO DENTAL JOHNSON'S</h4>
+        <p>Fio Dental Johnson's Essencial Menta</p>
+        <p class="preco">Unidade com 100m</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-bucal" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53719907764_a7da00d06a_m.jpg">
+        <h4>FIO DENTAL JOHNSON'S</h4>
+        <p>Fio Dental Johnson's Reach </p>
+        <p class="preco">Unidade com 50m</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732742415_24dc103f04_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Super Proteção Always Suave com Abas</p>
+        <p class="preco">Pacote com 8 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732439178_cee57da585_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Always Super Proteção Suave </p>
+        <p class="preco">Pacote com 10 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732324921_d565290a9b_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Super Proteção Always Seca com Abas</p>
+        <p class="preco">Pacote com 32 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732552734_02dd3d8353_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Always Super Proteção Suave com Abas </p>
+        <p class="preco">Pacote com 32 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53731411207_dba711c623_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always Seca com Abas</p>
+        <p class="preco">Pacote com 8 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732668349_d83a4da598_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always Suave com Abas</p>
+        <p class="preco">Pacote com 8 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732503433_48c61db717_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always Seca com Abas</p>
+        <p class="preco">Pacote com 32 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732676374_c67ec708f0_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always Seca com Abas</p>
+        <p class="preco">Pacote com 48 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732558323_b7b6517219_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always Suave com Abas</p>
+        <p class="preco">Pacote com 48 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53731439842_4fca57872e_m.jpg">
+        <h4>ABSORVENTE ALWAYS</h4>
+        <p>Absorvente Noturno Always XG Suave com Abas</p>
+        <p class="preco">Pacote com 26 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732682905_0235a5202e_m.jpg">
+        <h4>ABSORVENTE INTIMUS</h4>
+        <p>Absorvente em Gel Noturno Intimus Seca com Abas </p>
+        <p class="preco">Pacote com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732689145_96d71a0d8f_m.jpg">
+        <h4>ABSORVENTE INTIMUS</h4>
+        <p>Absorvente em Gel Noturno Intimus Suave com Abas </p>
+        <p class="preco">Pacote com 30 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732601049_b106ef0e64_m.jpg">
+        <h4>ABSORVENTE INTIMUS</h4>
+        <p>Absorvente Interno Intimus Super </p>
+        <p class="preco">Embalagem com 8 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732608444_b31cc910ce_m.jpg">
+        <h4>ABSORVENTE INTIMUS</h4>
+        <p>Absorvente Intimus Dia e Noite</p>
+        <p class="preco">Pacote com 28 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732487368_9e30998c1a_m.jpg">
+        <h4>ABSORVENTE INTIMUS</h4>
+        <p>Absorvente Intimus Seca com Abas</p>
+        <p class="preco">Pacote com 16 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732575393_8e511b9578_m.jpg">
+        <h4>PROTETOR DIÁRIO ALWAYS</h4>
+        <p>Protetor Diário Always Respirável</p>
+        <p class="preco">Pacote com 120 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53732381671_e4dd9ff638_m.jpg">
+        <h4>PROTETOR DIÁRIO CAREFREE</h4>
+        <p>Protetor Diário Carefree Todo dia</p>
+        <p class="preco">Pacote com 80 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="higiene-intima" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53731461022_f92bdc25b7_m.jpg">
+        <h4>PROTETOR DIÁRIO CAREFREE</h4>
+        <p>Protetor Diário Intimus Indicador de Troca</p>
+        <p class="preco">Pacote com 80 unidades</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734310517_23bf9c27aa_m.jpg">
+        <h4>PAPEL HIGIÊNICO COTTON</h4>
+        <p>Papel Higiênico Cotton Folha Dupla -30m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735671860_9e32d36703_m.jpg">
+        <h4>PAPEL HIGIÊNICO COTTON</h4>
+        <p>Papel Higiênico Cotton Folha Dupla -30m </p>
+        <p class="preco">Pacote com 24 rolos</p>
+      </div>
+
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734319307_7d29fdc6c4_m.jpg">
+        <h4>PAPEL HIGIÊNICO DELUXE</h4>
+        <p>Papel Higiênico Deluxe Folha Dupla -20m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734333027_83d3334bde_m.jpg">
+        <h4>PAPEL HIGIÊNICO MAX</h4>
+        <p>Papel Higiênico Max Pure Folha Dupla -30m </p>
+        <p class="preco">Pacote com 4 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735600539_c0416b48ae_m.jpg">
+        <h4>PAPEL HIGIÊNICO MAX</h4>
+        <p>Papel Higiênico Max Pure Folha Dupla -30m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735264186_a179a24c30_m.jpg">
+        <h4>PAPEL HIGIÊNICO MAX</h4>
+        <p>Papel Higiênico Max Pure Folha Dupla -40m </p>
+        <p class="preco">Pacote com 6 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735698285_b40e1f88ef_m.jpg">
+        <h4>PAPEL HIGIÊNICO MILI </h4>
+        <p>Papel Higiênico Mili Folha Dupla -30m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735607279_11d5533a29_m.jpg">
+        <h4>PAPEL HIGIÊNICO MILI </h4>
+        <p>Papel Higiênico Mili Folha Dupla -30m </p>
+        <p class="preco">Pacote com 16 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734346992_24f5640499_m.jpg">
+        <h4>PAPEL HIGIÊNICO MILI </h4>
+        <p>Papel Higiênico Mili Folha Dupla -30m </p>
+        <p class="preco">Pacote com 24 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735480573_883b52bb81_m.jpg">
+        <h4>PAPEL HIGIÊNICO NEVE</h4>
+        <p>Papel Higiênico Neve Folha Dupla -30m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735707800_3aa8d0acf4_m.jpg">
+        <h4>PAPEL HIGIÊNICO PERSONAL</h4>
+        <p>Papel Higiênico Personal Vip Folha Dupla -50m </p>
+        <p class="preco">Pacote com 20 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735711915_5ef9da1924_m.jpg">
+        <h4>PAPEL HIGIÊNICO SUBLIME</h4>
+        <p>Papel Higiênico Sublime Folha Simples -30m </p>
+        <p class="preco">Pacote com 4 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="papel-higienico" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735621499_2d9684b747_m.jpg">
+        <h4>PAPEL HIGIÊNICO SUBLIME</h4>
+        <p>Papel Higiênico Sublime Folha Simples -30m </p>
+        <p class="preco">Pacote com 12 rolos</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734374472_2c01fdfdd3_m.jpg">
+        <h4>SABONETE DOVE</h4>
+        <p>Sabonete Dove Branco</p>
+        <p class="preco">Pacote com 90g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735641939_a55737a24c_m.jpg">
+        <h4>SABONETE NIVEA</h4>
+        <p>Sabonete Hidratante Nivea Erva Doce </p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735644849_940ff46a32_m.jpg">
+        <h4>SABONETE NIVEA</h4>
+        <p>Sabonete Hidratante Nivea Lavanda e Óleos </p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734383217_bc44a591d6_m.jpg">
+        <h4>SABONETE NIVEA</h4>
+        <p>Sabonete Hidratante Nivea Orquídeas </p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735649484_862b2e38cc_m.jpg">
+        <h4>SABONETE LUX</h4>
+        <p>Sabonete Lux Flor de Verbena </p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735313226_2532c753df_m.jpg">
+        <h4>SABONETE LUX</h4>
+        <p>Sabonete Lux Lavanda </p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="sabonetes" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735745335_763df8944b_m.jpg">
+        <h4>SABONETE LUX</h4>
+        <p>Sabonete Lux Orquídea Negra</p>
+        <p class="preco">Unidade com 85g</p>
+      </div>
+    </div>
+      <h3>PADARIA E MATINAIS:</h3>
+      <select id="filtro-categoria-padaria" onchange="filtrarProdutosPadaria()">
+        <option value="todos">Selecione a categoria</option>
+        <option value="leites">Leites</option>
+        <option value="geleias-mel">Geleias e Mel</option>
+        <option value="paes-torradas">Pães e Torradas</option>
+  
+      </select>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735755195_13d7d54d54_m.jpg">
+        <h4>COMPOSTO LÁCTEO PIRACANJUBA</h4>
+        <p>Composto Lácteo Piracanjuba Zero Lactose</p>
+        <p class="preco">Lata com 380g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735758920_e69faf7775_m.jpg">
+        <h4>LEITE EM PÓ CAMPONESA</h4>
+        <p>Leite em Pó Camponesa Instantâneo</p>
+        <p class="preco">Pacote com 750g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735670499_cb20c6b797_m.jpg">
+        <h4>LEITE EM PÓ ITAMBÉ</h4>
+        <p>Leite em Pó Itambé Integral Instantâneo</p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735538008_dd7a68a19c_m.jpg">
+        <h4>LEITE EM PÓ ITAMBÉ</h4>
+        <p>Leite em Pó Itambé Integral </p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735542453_83322d26f0_m.jpg">
+        <h4>LEITE EM PÓ MOLICO</h4>
+        <p>Leite em Pó Molico Instantâneo </p>
+        <p class="preco">Lata com 280g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735543858_8fa914bbfa_m.jpg">
+        <h4>LEITE EM PÓ NINHO</h4>
+        <p>Leite em Pó Ninho Integral Instantâneo </p>
+        <p class="preco">Lata com 380g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53734416167_cafcae52ab_m.jpg">
+        <h4>LEITE EM PÓ PIRACANJUBA</h4>
+        <p>Leite em Pó Piracanjuba Integral Instantâneo </p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735682464_852d003ab7_m.jpg">
+        <h4>LEITE EM PÓ PIRACANJUBA</h4>
+        <p>Leite em Pó Piracanjuba Integral Instantâneo </p>
+        <p class="preco">Pacote com 1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53735350036_7c3c0a78a8_m.jpg">
+        <h4>LEITE EM PÓ PIRACANJUBA</h4>
+        <p>Leite em Pó Piracanjuba Integral</p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53737638008_ee2d2143a8_m.jpg">
+        <h4>LEITE LONGA VIDA CAMPONESA</h4>
+        <p>Leite Longa Vida Camponesa Desnatado </p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53737782744_f7e2ed1df1_m.jpg">
+        <h4>LEITE LONGA VIDA CAMPONESA</h4>
+        <p>Leite Longa Vida Camponesa Integral</p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53737654383_bc37134ffd_m.jpg">
+        <h4>LEITE LONGA VIDA CAMPONESA</h4>
+        <p>Leite Longa Vida Camponesa Semidesnatado</p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53737796084_79763874ed_m.jpg">
+        <h4>LEITE LONGA VIDA MOLICO</h4>
+        <p>Leite Longa Vida Molico Desnatado</p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="leites" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53736536817_4e4e87b177_m.jpg">
+        <h4>LEITE LONGA VIDA NINHO</h4>
+        <p>Leite Longa Vida Ninho Integral</p>
+        <p class="preco">TP com 1L</p>
+      </div>
+      
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766721162_1eaf9c793c_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Amora</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766727097_5c450d0815_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Damasco</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767640446_272c36c33d_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Framboesa</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767969104_2b51d5e0f0_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Frutas Vermelhas</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767838128_b4a86944c5_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Mirtilo</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768069480_e180bf7d98_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Pimenta</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767980499_5cb55e2f9e_m.jpg">
+        <h4>GELÉIA LINEA</h4>
+        <p>Geléia Linea Uva</p>
+        <p class="preco">Vidro com 230g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768032510_30b9011309_m.jpg">
+        <h4>GELÉIA QUEENSBERRY</h4>
+        <p>Geléia Diet Queensberry Frutas Vermelhas</p>
+        <p class="preco">Vidro com 280g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766784472_fba21bf450_m.jpg">
+        <h4>GELÉIA QUEENSBERRY</h4>
+        <p>Geléia Diet Queensberry Morango </p>
+        <p class="preco">Vidro com 280g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768023659_94f55b3dd3_m.jpg">
+        <h4>GELÉIA QUEENSBERRY</h4>
+        <p>Geléia Queensberry Frutas Vermelhas </p>
+        <p class="preco">Vidro com 320g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767892488_4e089e5e75_m.jpg">
+        <h4>GELÉIA QUEENSBERRY</h4>
+        <p>Geléia Queensberry Goiaba</p>
+        <p class="preco">Vidro com 320g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767895338_a5ec316c6f_m.jpg">
+        <h4>GELÉIA QUEENSBERRY</h4>
+        <p>Geléia Queensberry Morango</p>
+        <p class="preco">Vidro com 320g</p>
+      </div>
+
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766753632_e9418a8cb8_m.jpg">
+        <h4>MEL BALDONI</h4>
+        <p>Mel Baldoni Flores de Laranjeira</p>
+        <p class="preco">Pet com 300g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767993559_840eca0e4a_m.jpg">
+        <h4>MEL BALDONI</h4>
+        <p>Mel Baldoni Chef</p>
+        <p class="preco">Pet com 1,1kg</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="geleias-mel" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766762407_b2d605117f_m.jpg">
+        <h4>MEL HOLANDA</h4>
+        <p>Mel Holanda</p>
+        <p class="preco">Bisnaga com 200g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768162225_dabdcbcb81_m.jpg">
+        <h4>PÃO DE FORMA BALDINI</h4>
+        <p>Pão de Forma Baldini Integral </p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768074014_b7b042f80b_m.jpg">
+        <h4>PÃO DE FORMA BALDINI</h4>
+        <p>Pão de Forma Baldini Tradicional </p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767752126_84c731bf2c_m.jpg">
+        <h4>PÃO DE FORMA BAUDUCCO</h4>
+        <p>Pão de Forma Bauducco Integral</p>
+        <p class="preco">Pacote com 390g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767946153_4d8aab2036_m.jpg">
+        <h4>PÃO DE FORMA BAUDUCCO</h4>
+        <p>Pão de Forma Bauducco Tradicional</p>
+        <p class="preco">Pacote com 390g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766848287_d34114cc27_m.jpg">
+        <h4>PÃO DE FORMA PULLMAN</h4>
+        <p>Pão de Forma Pullman Tradicional</p>
+        <p class="preco">Pacote com 480g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768177560_9108280e67_m.jpg">
+        <h4>PÃO DE FORMA VISCONTI</h4>
+        <p>Pão de Forma Visconti Integral</p>
+        <p class="preco">Pacote com 400g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766860927_284e5d8cbd_m.jpg">
+        <h4>TORRADA BAUDUCCO</h4>
+        <p>Torrada Bauducco Cereale Tradicional</p>
+        <p class="preco">Pacote com 128g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768191805_e36bfce653_m.jpg">
+        <h4>TORRADA BAUDUCCO</h4>
+        <p>Torrada Bauducco Cereale Multicereais</p>
+        <p class="preco">Pacote com 128g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53766868392_8b13984f38_m.jpg">
+        <h4>TORRADA MARILAN</h4>
+        <p>Torrada Marilan Magic Toast Multicereais</p>
+        <p class="preco">Pacote com 110g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767974253_c8cb478f41_m.jpg">
+        <h4>TORRADA MARILAN</h4>
+        <p>Torrada Marilan Magic Toast Peito de Peru</p>
+        <p class="preco">Pacote com 110g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53767786861_33f9745eeb_m.jpg">
+        <h4>TORRADA VISCONTI</h4>
+        <p>Torrada Visconti Integral</p>
+        <p class="preco">Pacote com 120g</p>
+      </div>
+      <div class="produto" data-cidade="MG" data-categorias="paes-torradas" onclick="toggleSelecao(this)">
+        <img src="https://live.staticflickr.com/65535/53768206770_078b8e8458_m.jpg">
+        <h4>TORRADA VISCONTI</h4>
+        <p>Torrada Visconti Tradicional</p>
+        <p class="preco">Pacote com 120g</p>
+      </div>
+    
+      <div class="botao">
+        <button onclick="finalizarPedido()">Finalizar Pedido</button>
+        <!-- Adicione mais itens conforme necessário -->
+    </main>
+    <footer>
+  
+      </div>
+    </footer>
+    <script src="scripts.js"></script>
+  
+    <script>
+      function toggleSelecao(elemento) {
+        elemento.classList.toggle("selecionado");
+      }
+  
+      function finalizarPedido() {
+        var itensSelecionados = document.querySelectorAll(".produto.selecionado");
+        var itens = [];
+  
+        itensSelecionados.forEach(function (item) {
+          var nomeItem = item.querySelector("h4").textContent;
+          var urlImagem = item.querySelector("img").src; // Obter a URL da imagem
+          itens.push({nome: nomeItem, imagem: urlImagem}); // Armazenar nome e URL da imagem
+        });
+  
+        localStorage.setItem("itensSelecionados", JSON.stringify(itens));
+        window.location.href = "itens_selecionados.html"; // Redirecionar para a página de itens selecionados
+  
+      }
+  
+      itensSelecionados.forEach(function (item) {
+        var nomeItem = item.querySelector("h4").textContent;
+        itens.push(nomeItem);
+      });
+  
+      localStorage.setItem("itensSelecionados", JSON.stringify(itens));
+      window.location.href = "itens_selecionados.html"; // Redireciona para a página de itens selecionados
+  
+  
+      var categoriaSelecionada = document.getElementById("filtro-categoria-bebidas").value;
+      var categoriaSelecionada = document.getElementById("filtro-categoria-mercearia").value;
+      var categoriaSelecionada = document.getElementById("filtro-categoria-limpeza").value;
+      var categoriaSelecionada = document.getElementById("filtro-categoria-higiene").value;
+      var categoriaSelecionada = document.getElementById("filtro-categoria-padaria").value;
+      // Função para filtrar produtos de acordo com o estado selecionado
+      function filtrarPorCidade() {
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado)) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+  
+  
+      function filtrarProdutosBebidas() {
+        var categoriaSelecionada = document.getElementById("filtro-categoria-bebidas").value;
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var categoriasPermitidas = produto.getAttribute("data-categorias").split(" ");
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (
+            (categoriaSelecionada === "todos" || categoriasPermitidas.includes(categoriaSelecionada)) &&
+            (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado))
+          ) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+      function filtrarProdutosMercearia() {
+        var categoriaSelecionada = document.getElementById("filtro-categoria-mercearia").value;
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var categoriasPermitidas = produto.getAttribute("data-categorias").split(" ");
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (
+            (categoriaSelecionada === "todos" || categoriasPermitidas.includes(categoriaSelecionada)) &&
+            (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado))
+          ) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+      function filtrarProdutosLimpeza() {
+        var categoriaSelecionada = document.getElementById("filtro-categoria-limpeza").value;
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var categoriasPermitidas = produto.getAttribute("data-categorias").split(" ");
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (
+            (categoriaSelecionada === "todos" || categoriasPermitidas.includes(categoriaSelecionada)) &&
+            (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado))
+          ) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+      function filtrarProdutosHigiene() {
+        var categoriaSelecionada = document.getElementById("filtro-categoria-higiene").value;
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var categoriasPermitidas = produto.getAttribute("data-categorias").split(" ");
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (
+            (categoriaSelecionada === "todos" || categoriasPermitidas.includes(categoriaSelecionada)) &&
+            (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado))
+          ) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+      function filtrarProdutosPadaria() {
+        var categoriaSelecionada = document.getElementById("filtro-categoria-padaria").value;
+        var estadoSelecionado = document.getElementById("cidade").value;
+        var produtos = document.getElementsByClassName("produto");
+  
+        for (var i = 0; i < produtos.length; i++) {
+          var produto = produtos[i];
+          var categoriasPermitidas = produto.getAttribute("data-categorias").split(" ");
+          var cidadesPermitidas = produto.getAttribute("data-cidade").split(" ");
+  
+          if (
+            (categoriaSelecionada === "todos" || categoriasPermitidas.includes(categoriaSelecionada)) &&
+            (estadoSelecionado === "todas" || cidadesPermitidas.includes(estadoSelecionado))
+          ) {
+            produto.style.display = "block";
+          } else {
+            produto.style.display = "none";
+          }
+        }
+      }
+  
+    </script>
+  </body>
+  
+  </html>

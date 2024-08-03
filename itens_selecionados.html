@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Itens Selecionados</title>
+  <link rel="stylesheet" href="styles.css">
+  <style>
+/* Estilos para os itens selecionados */
+.itens-selecionados {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  flex-direction:column;
+
+}
+
+.item-selecionado {
+  margin: 20px 0; /* Adicionado espaço entre os itens */
+  padding: 0px;
+  border: none;
+  border-radius: 5px;
+}
+
+.item-selecionado img {
+  width: 140px;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.controle-quantidade {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin:5px;
+}
+
+/* Estilos para os botões de aumentar e diminuir e a quantidade */
+.botao-diminuir,
+.botao-aumentar {
+  width: 30px;
+  height: 30px;
+  background-color: #ff6347; 
+  color:white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px; /* Borda arredondada */
+  margin: 0 5px; /* Espaçamento entre os botões */
+  justify-content: flex-start;
+}
+
+.botao-diminuir:hover,
+.botao-aumentar:hover {
+  background-color: red;
+
+}
+
+.quantidade {
+  padding: 5px 10px; /* Espaçamento interno */
+  background-color: #f2f2f2; /* Cor de fundo cinza claro */
+  color: black;
+  border-radius: 5px; /* Borda arredondada */
+
+}
+
+.botao-remover {
+  background-color: #ff6347; /* Cor de fundo vermelha */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left:20px;
+}
+
+.botao-remover:hover {
+  background-color: red; /* Cor de fundo vermelha mais escura no hover */
+}
+
+
+
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Itens Selecionados</h1>
+    </div>
+  </header>
+  <main>
+    <div class="itens-selecionados">
+
+      </div>
+
+
+    </div>
+
+  </main>
+  <footer>
+  </footer>
+  <script src="scripts.js"></script>
+  <script>
+   // Recupera os itens selecionados armazenados no localStorage
+var itensSelecionados = localStorage.getItem('itensSelecionados');
+itensSelecionados = JSON.parse(itensSelecionados);
+
+// Exibe os itens selecionados na página
+if (itensSelecionados && itensSelecionados.length > 0) {
+  var container = document.querySelector('.itens-selecionados');
+  itensSelecionados.forEach(function(item) {
+    var divItem = document.createElement('div');
+    divItem.classList.add('item-selecionado');
+
+    var img = document.createElement('img');
+    img.src = item.imagem;
+    divItem.appendChild(img);
+
+    var controleQuantidade = document.createElement('div');
+    controleQuantidade.classList.add('controle-quantidade');
+
+    var botaoDiminuir = document.createElement('button');
+    botaoDiminuir.textContent = '-';
+    botaoDiminuir.classList.add('botao-diminuir'); // Adiciona classe para estilização
+    botaoDiminuir.addEventListener('click', diminuirQuantidade);
+    controleQuantidade.appendChild(botaoDiminuir);
+
+    var quantidadeSelecionada = document.createElement('span');
+    quantidadeSelecionada.classList.add('quantidade');
+    quantidadeSelecionada.textContent = 1;
+    controleQuantidade.appendChild(quantidadeSelecionada);
+
+    var botaoAumentar = document.createElement('button');
+    botaoAumentar.textContent = '+';
+    botaoAumentar.classList.add('botao-aumentar'); // Adiciona classe para estilização
+    botaoAumentar.addEventListener('click', aumentarQuantidade);
+    controleQuantidade.appendChild(botaoAumentar);
+
+    divItem.appendChild(controleQuantidade);
+
+    var botaoRemover = document.createElement('button');
+    botaoRemover.textContent = 'EXCLUIR';
+    botaoRemover.classList.add('botao-remover'); // Adiciona classe para estilização
+    botaoRemover.addEventListener('click', removerItem);
+    divItem.appendChild(botaoRemover);
+
+    container.appendChild(divItem);
+  });
+}
+
+// Função para diminuir a quantidade de um item selecionado
+function diminuirQuantidade() {
+  var quantidadeElemento = event.target.parentElement.querySelector('.quantidade');
+  var quantidade = parseInt(quantidadeElemento.textContent);
+  if (quantidade > 1) {
+    quantidade--;
+    quantidadeElemento.textContent = quantidade;
+  }
+}
+
+// Função para aumentar a quantidade de um item selecionado
+function aumentarQuantidade() {
+  var quantidadeElemento = event.target.parentElement.querySelector('.quantidade');
+  var quantidade = parseInt(quantidadeElemento.textContent);
+  quantidade++;
+  quantidadeElemento.textContent = quantidade;
+}
+
+// Função para remover um item selecionado
+function removerItem() {
+  var itemSelecionado = this.closest('.item-selecionado');
+  itemSelecionado.remove();
+}
+</script>
+</body>
+</html>
+
+
+
